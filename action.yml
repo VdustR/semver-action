@@ -1,5 +1,5 @@
-name: "Semantic Versioning"
-description: "Simple semver github action supporting experimental versioning"
+name: "Simple Semantic Version"
+description: "Simple semantic versioning supporting experimental releases"
 inputs:
   defaultTag:
     description: "Package tag name for git version tags"
