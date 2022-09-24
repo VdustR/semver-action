@@ -1,0 +1,30 @@
+name: "Semantic Versioning"
+description: "Simple semver github action supporting experimental versioning"
+inputs:
+  defaultTag:
+    description: "Package tag name for git version tags"
+    required: false
+    default: "latest"
+outputs:
+  version:
+    description: "Version"
+    value: ${{ steps.generate-version.outputs.version }}
+  tag:
+    description: "Package tag name"
+    value: ${{ steps.generate-version.outputs.version }}
+runs:
+  using: "composite"
+  steps:
+    - id: generate-version
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const sha = context.sha.substring(0, 7)
+          const branchName = context.ref.startsWith('refs/heads/') ? context.ref.substring('refs/heads/'.length) : ''
+          const version = branchName ? `0.0.0-${branchName}.${sha}` : context.ref.substring('refs/tags/v'.length)
+          const tag = branchName ? branchName : version.match(/^\d+\.\d+\.\d+$/) ? progress.env.INPUT_DEFAULT_TAG : version.match(/^\d+\.\d+\.\d+-([\d\w]+)/)[1]
+          core.setOutput('version', version)
+          core.setOutput('tag', tag)
+branding:
+  icon: "tag"
+  color: "blue"
