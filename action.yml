@@ -22,7 +22,7 @@ runs:
           const sha = context.sha.substring(0, 7)
           const branchName = context.ref.startsWith('refs/heads/') ? context.ref.substring('refs/heads/'.length) : ''
           const version = branchName ? `0.0.0-${branchName}.${sha}` : context.ref.substring('refs/tags/v'.length)
-          const tag = branchName ? branchName : version.match(/^\d+\.\d+\.\d+$/) ? process.env.INPUT_DEFAULT_TAG : version.match(/^\d+\.\d+\.\d+-([\d\w]+)/)[1]
+          const tag = branchName ? branchName : version.match(/^\d+\.\d+\.\d+$/) ? ${{ inputs.defaultTag }} : version.match(/^\d+\.\d+\.\d+-([\d\w]+)/)[1]
           core.setOutput('version', version)
           core.setOutput('tag', tag)
 branding:

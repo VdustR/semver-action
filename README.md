@@ -33,6 +33,7 @@ jobs:
 | Git tag       | Version      | Package Tag     |
 | ------------- | ------------ | --------------- |
 | v1.2.3        | 1.2.3        | `${defaultTag}` |
+| v1.2.3-rc     | 1.2.3-rc     | rc              |
 | v1.2.3-rc.1   | 1.2.3-rc.1   | rc              |
 | v1.2.3-beta.1 | 1.2.3-beta.1 | beta            |
 
