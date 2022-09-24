@@ -21,7 +21,7 @@ jobs:
 
     steps:
       - id: version
-        uses: VdustR/semver-action@v0.0.2
+        uses: VdustR/semver-action@v0
         with:
           defaultTag: "latest" # Optional. Only when tags matching `v*.*.*` .
       - name: Echo result

@@ -11,7 +11,7 @@ outputs:
     value: ${{ steps.generate-version.outputs.version }}
   tag:
     description: "Package tag name"
-    value: ${{ steps.generate-version.outputs.version }}
+    value: ${{ steps.generate-version.outputs.tag }}
 runs:
   using: "composite"
   steps:
