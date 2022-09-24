@@ -5,7 +5,7 @@ Simple semantic versioning supporting experimental releases.
 ## Usage
 
 ```yml
-name: NPM Publish
+name: Test Version
 
 on:
   push:
@@ -41,6 +41,47 @@ jobs:
 | ------------ | --------------------------- | ------------ |
 | nightly      | 0.0.0-nightly.`${sha}`      | nightly      |
 | experimental | 0.0.0-experimental.`${sha}` | experimental |
+
+## Example
+
+```yml
+name: NPM Publish
+
+on:
+  push:
+    branches:
+      - experimental
+    tags:
+      - v*.*.*
+      - v*.*.*-*
+
+jobs:
+  container-job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 7
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+          cache: "pnpm"
+      - run: pnpm install --frozen-lockfile
+      - name: Build
+        run: pnpm build
+      - id: version
+        uses: VdustR/semver-action@v0
+      - name: version
+        run: npm --no-git-tag-version version ${{ steps.version.outputs.version }}
+      - name: Publish
+        uses: JS-DevTools/npm-publish@v1
+        with:
+          token: ${{ secrets.NPM_TOKEN }}
+          tag: ${{ steps.version.outputs.tag }}
+          access: public
+```
 
 ## License
 
